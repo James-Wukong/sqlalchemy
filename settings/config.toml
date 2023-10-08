@@ -1,0 +1,11 @@
+[project]
+name = "SuperStore"
+description = "Data Management Project"
+version = "1.0.0"
+
+[database]
+host = "localhost"
+user = "root"
+password = "root"
+port = 3306
+db_name = "GBC_test"
