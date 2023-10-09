@@ -353,3 +353,35 @@ class ProductOrder(Base):
 
     def __repr__(self):
         return f'<Metadata {self.id} - {self.order_id}, {self.product_id})>'
+    
+
+# master data
+class SupserstoreOrder(Base):
+    __tablename__ = 'superstore_orders'
+
+    id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
+    row_id: Mapped[int] = mapped_column(INTEGER(unsigned=True))
+    product_no: Mapped[str] = mapped_column(String(15), nullable=False, comment='generated product number, such as "ABC-SDF-121123"')
+    order_no: Mapped[str] = mapped_column(String(50), nullable=False, comment='generated order number, such as "ABC-SDF-121123"')
+    ship_mode: Mapped[Optional[str]] = mapped_column(String(255))
+    customer_no: Mapped[Optional[str]] = mapped_column(String(255))
+    customer_name: Mapped[Optional[str]] = mapped_column(String(255))
+    segment: Mapped[Optional[str]] = mapped_column(String(255))
+    country: Mapped[Optional[str]] = mapped_column(String(255))
+    city: Mapped[Optional[str]] = mapped_column(String(255))
+    state: Mapped[Optional[str]] = mapped_column(String(255))
+    post_code: Mapped[Optional[str]] = mapped_column(String(255))
+    region: Mapped[Optional[str]] = mapped_column(String(255))
+    category: Mapped[Optional[str]] = mapped_column(String(255))
+    sub_cate: Mapped[Optional[str]] = mapped_column(String(255))
+    product_name: Mapped[Optional[str]] = mapped_column(String(255))
+    sales: Mapped[Optional[int]] = mapped_column(Numeric(12, 2))
+    discount: Mapped[Optional[int]] = mapped_column(Numeric(4, 2))
+    quantity: Mapped[int] = mapped_column(INTEGER(unsigned=True))
+    profit: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, comment='product discount in order, such as "0.23"')
+
+    order_at: Mapped[Optional[datetime]]
+    ship_at: Mapped[Optional[datetime]]
+
+    def __repr__(self):
+        return f'<Metadata {self.id} - {self.order_no}, {self.product_name})>'
