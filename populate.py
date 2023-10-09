@@ -6,6 +6,7 @@ import sqlalchemy as sa
 from src.constants import ROOT_DIR
 from src.database import engine as db_engine
 from src.models import mapped_models as mm
+from src.helpers import parse_name
 
 data_file = os.path.join(ROOT_DIR, 'data', 'Sample - Superstore.xls')
 engine = db_engine.sql_engine()
@@ -17,6 +18,7 @@ df_returns = pd.read_excel(data_file, sheet_name='Returns')
 # dump orders data into superstore_orders table
 def dump_orders_db():
     table_name = 'superstore_orders'
+    # pick random post code from city 'Burlington'
     df_orders['Postal Code'] = df_orders['Postal Code'].fillna('52601')
     # print(df_orders.head(2))
     df_orders_insert = df_orders.rename(columns={
@@ -117,6 +119,136 @@ def etl_state():
         )
         session.commit()
 
-# for id, state in etl_people():
-#     print(id, state)
-etl_state()
+# ETL city data to cities table
+def etl_city():
+    subq = (sa.select(mm.SupserstoreOrder.state, mm.SupserstoreOrder.city)
+        .group_by(mm.SupserstoreOrder.state, mm.SupserstoreOrder.city)
+        .subquery()
+    )
+    stmt = sa.select(mm.State.id.label('state_id'), subq.c.city).join_from(
+        subq, mm.State, mm.State.name == subq.c.state
+    )
+
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.City), [
+                {'name': city, 'state_id': state_id} \
+                for state_id, city in session.execute(stmt)
+            ],
+        )
+        session.commit()
+
+# ETL address data to addresses table
+def etl_address():
+    subq_state = (sa.select(mm.SupserstoreOrder.state, mm.SupserstoreOrder.city, mm.SupserstoreOrder.post_code)
+        .group_by(mm.SupserstoreOrder.state, mm.SupserstoreOrder.city, mm.SupserstoreOrder.post_code)
+        .subquery()
+    )
+    subq_city = (sa.select(mm.State.id.label('state_id'), subq_state.c.post_code, subq_state.c.city).join_from(
+        subq_state, mm.State, mm.State.name == subq_state.c.state
+    ).subquery())
+    stmt = sa.select(mm.City.id.label('city_id'), subq_city.c.post_code).join_from(
+        subq_city, mm.City, sa.and_(mm.City.name == subq_city.c.city, mm.City.state_id == subq_city.c.state_id)
+    )
+    
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Address), [
+                {'postcode': post_code, 'city_id': city_id} \
+                for city_id, post_code in session.execute(stmt)
+            ],
+        )
+        session.commit()
+
+# ETL categories into categories table
+def etl_category():
+    cate_stmt = sa.select(sa.distinct(mm.SupserstoreOrder.category))
+    subq = (sa.select(mm.SupserstoreOrder.category, mm.SupserstoreOrder.sub_cate)
+        .group_by(mm.SupserstoreOrder.category, mm.SupserstoreOrder.sub_cate)
+        .subquery()
+    )
+    sub_cate_stmt = sa.select(mm.Category.id.label('parent_id'), subq.c.sub_cate).join_from(
+        subq, mm.Category, mm.Category.name == subq.c.category
+    )
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Category), [
+                {'name': name} for name in session.scalars(cate_stmt)
+            ],
+        )
+        session.commit()
+        session.execute(
+            sa.insert(mm.Category), [
+                {'name': sub_cate, 'parent_id': parent_id} \
+                    for parent_id, sub_cate in session.execute(sub_cate_stmt)
+            ],
+        )
+        session.commit()
+
+    # print(cate_stmt)
+
+# etl order statuses into table
+def etl_order_status():
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.OrderStatus), [
+                {'name': 'completed'},
+                {'name': 'returned'}
+            ],
+        )
+        session.commit()
+
+# etl segment into table
+def etl_segment():
+    stmt = sa.select(sa.distinct(mm.SupserstoreOrder.segment))
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Segment), [
+                {'name': name} for name in session.scalars(stmt)
+            ],
+        )
+        session.commit()
+
+# etl customers into customers table
+def etl_customer():
+    subq = (sa.select(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.customer_name, mm.SupserstoreOrder.segment)
+        .group_by(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.customer_name, mm.SupserstoreOrder.segment)
+        .subquery()
+    )
+    stmt = sa.select(mm.Segment.id.label('segment_id'), subq.c.customer_no, subq.c.customer_name).join_from(
+        subq, mm.Segment, mm.Segment.name == subq.c.segment
+    )
+    # print(stmt)
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Customer), [
+                {'customer_no': customer_no, 'segment_id': segment_id, \
+                'first_name': parse_name(customer_name)[0], \
+                'mid_name': parse_name(customer_name)[1], \
+                'last_name': parse_name(customer_name)[2]} \
+                for segment_id, customer_no, customer_name in session.execute(stmt)
+            ],
+        )
+        session.commit()
+
+# etl customer address table
+def etl_address_customer():
+    subq = (sa.select(sa.distinct(mm.SupserstoreOrder.customer_no), mm.SupserstoreOrder.post_code)
+        .subquery()
+    )
+    # stmt = sa.select(mm.Segment.id.label('segment_id'), subq.c.customer_no, subq.c.customer_name).join_from(
+    #     subq, mm.Segment, mm.Segment.name == subq.c.segment
+    # )
+    print(subq)
+    # with Session(bind=engine) as session:
+    #     session.execute(
+    #         sa.insert(mm.Customer), [
+    #             {'customer_no': customer_no, 'segment_id': segment_id, \
+    #             'first_name': parse_name(customer_name)[0], \
+    #             'mid_name': parse_name(customer_name)[1], \
+    #             'last_name': parse_name(customer_name)[2]} \
+    #             for segment_id, customer_no, customer_name in session.execute(stmt)
+    #         ],
+    #     )
+    #     session.commit()
+# etl_address_customer()
