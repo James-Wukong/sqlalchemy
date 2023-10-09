@@ -99,22 +99,23 @@ def etl_people():
 def etl_state():
     subq = (
         sa.select(mm.SupserstoreOrder.country, mm.SupserstoreOrder.state, mm.SupserstoreOrder.region)
-        .group_by(mm.SupserstoreOrder.country, mm.SupserstoreOrder.state)
+        .group_by(mm.SupserstoreOrder.country, mm.SupserstoreOrder.state, mm.SupserstoreOrder.region)
         .subquery()
     )
 
-    stmt = sa.select(mm.Country.id, subq.c.state, mm.Region.id).join_from(
+    stmt = sa.select(mm.Country.id, subq.c.state, mm.Region.id.label('region_id')).join_from(
         subq, mm.Country, mm.Country.name == subq.c.country
     ).join(
         mm.Region, subq.c.region == mm.Region.name
     )
-    # with Session(bind=engine) as session:
-    #     for id, state in session.execute(stmt):
-    #         session.execute(
-    #             sa.insert(mm.State).values('name')
-    #         )
-    #     session.commit()
-    print(stmt)
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.State), [
+                {'name': state, 'country_id': country_id, 'region_id': region_id} \
+                for country_id, state, region_id in session.execute(stmt)
+            ],
+        )
+        session.commit()
 
 # for id, state in etl_people():
 #     print(id, state)
