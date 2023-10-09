@@ -233,22 +233,16 @@ def etl_customer():
 
 # etl customer address table
 def etl_address_customer():
-    subq = (sa.select(sa.distinct(mm.SupserstoreOrder.customer_no), mm.SupserstoreOrder.post_code)
-        .subquery()
-    )
-    # stmt = sa.select(mm.Segment.id.label('segment_id'), subq.c.customer_no, subq.c.customer_name).join_from(
-    #     subq, mm.Segment, mm.Segment.name == subq.c.segment
-    # )
-    print(subq)
-    # with Session(bind=engine) as session:
-    #     session.execute(
-    #         sa.insert(mm.Customer), [
-    #             {'customer_no': customer_no, 'segment_id': segment_id, \
-    #             'first_name': parse_name(customer_name)[0], \
-    #             'mid_name': parse_name(customer_name)[1], \
-    #             'last_name': parse_name(customer_name)[2]} \
-    #             for segment_id, customer_no, customer_name in session.execute(stmt)
-    #         ],
-    #     )
-    #     session.commit()
-# etl_address_customer()
+    with Session(bind=engine) as session:
+        q = (session.query(sa.distinct(mm.SupserstoreOrder.customer_no), mm.Customer.id, mm.Address.id)
+                .join(mm.Customer, mm.SupserstoreOrder.customer_no == mm.Customer.customer_no)
+                .join(mm.Address, mm.SupserstoreOrder.post_code == mm.Address.postcode)
+                .all())
+        session.execute(
+            sa.insert(mm.AddressCustomer), [
+                {'customer_id': customer_id, 'address_id': address_id} \
+                    for _, customer_id, address_id in q
+            ]
+        )
+        session.commit()
+        

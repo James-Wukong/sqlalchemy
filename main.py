@@ -25,4 +25,6 @@ if __name__ == '__main__':
     # etl.etl_category()
     # etl.etl_order_status()
     # etl.etl_segment()
-    etl.etl_customer()
+    # etl.etl_customer()
+    # etl.etl_address_customer()
+    pass
