@@ -85,13 +85,13 @@ def etl_people():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Region), [
-                {'id': id, 'name': region} \
+                {'id': id, 'name': region}
                     for id, region in zip(df_people['id'].tolist(), df_people['Region'].tolist())
             ]
         )
         session.execute(
             sa.insert(mm.Employee), [
-                {'first_name': name.split()[1], 'last_name': name.split()[0], 'region_id': id} \
+                {'first_name': name.split()[1], 'last_name': name.split()[0], 'region_id': id}
                     for id, name in zip(df_people['id'].tolist(), df_people['Regional Manager'].tolist())
             ]
         )
@@ -114,7 +114,7 @@ def etl_state():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.State), [
-                {'name': state, 'country_id': country_id, 'region_id': region_id} \
+                {'name': state, 'country_id': country_id, 'region_id': region_id}
                 for country_id, state, region_id in session.execute(stmt)
             ],
         )
@@ -133,7 +133,7 @@ def etl_city():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.City), [
-                {'name': city, 'state_id': state_id} \
+                {'name': city, 'state_id': state_id}
                 for state_id, city in session.execute(stmt)
             ],
         )
@@ -162,7 +162,7 @@ def etl_address():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Address), [
-                {'postcode': post_code, 'city_id': city_id} \
+                {'postcode': post_code, 'city_id': city_id}
                 for city_id, post_code in session.execute(stmt)
             ],
         )
@@ -187,7 +187,7 @@ def etl_category():
         session.commit()
         session.execute(
             sa.insert(mm.Category), [
-                {'name': sub_cate, 'parent_id': parent_id} \
+                {'name': sub_cate, 'parent_id': parent_id}
                     for parent_id, sub_cate in session.execute(sub_cate_stmt)
             ],
         )
@@ -236,10 +236,10 @@ def etl_customer():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Customer), [
-                {'customer_no': customer_no, 'segment_id': segment_id, \
-                'first_name': parse_name(customer_name)[0], \
-                'mid_name': parse_name(customer_name)[1], \
-                'last_name': parse_name(customer_name)[2]} \
+                {'customer_no': customer_no, 'segment_id': segment_id,
+                'first_name': parse_name(customer_name)[0],
+                'mid_name': parse_name(customer_name)[1],
+                'last_name': parse_name(customer_name)[2]}
                 for segment_id, customer_no, customer_name in session.execute(stmt)
             ],
         )
@@ -256,7 +256,7 @@ def etl_address_customer():
         
         session.execute(
             sa.insert(mm.AddressCustomer), [
-                {'customer_id': customer_id, 'address_id': address_id} \
+                {'customer_id': customer_id, 'address_id': address_id}
                     for _, customer_id, address_id in q
             ]
         )
@@ -289,14 +289,14 @@ def etl_product():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Product), [
-                {'product_no': product_no, 
-                 'category_id': category_id, \
-                'name': product_name, \
-                'price': unit_price(sales, quantity, discount)} \
-                for category_id, product_no, product_name, sales, quantity, discount \
+                {'product_no': product_no,
+                 'category_id': category_id,
+                'name': product_name,
+                'price': unit_price(sales, quantity, discount)}
+                for category_id, product_no, product_name, sales, quantity, discount
                     in session.execute(stmt)
             ],
         )
         session.commit()
 
-# etl_product()
+etl_product()

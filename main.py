@@ -15,6 +15,7 @@ with Session(bind=engine) as session:
 
 if __name__ == '__main__':
     # create_model_tables()
+    # clean_products_v1()
     # etl.dump_orders_db()
     # etl.insert_metadatas()
     # etl.etl_country()
