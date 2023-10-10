@@ -108,7 +108,7 @@ class Customer(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.customer_no} references to segment: {self.segment_id})>'
 
-# transaction data
+# reference data
 class OrderStatus(Base):
     __tablename__ = 'order_statuses'
 
@@ -122,7 +122,7 @@ class OrderStatus(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.name})>'
 
-# transaction data
+# transactional data
 class Order(Base):
     __tablename__ = 'orders'
 
@@ -148,7 +148,7 @@ class Order(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.order_no}, {self.customer_id})>'
     
-# transaction data
+# transactional data
 class Shipment(Base):
     __tablename__ = 'shipments'
 
@@ -387,7 +387,7 @@ class Product(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.name}, {self.category_id})>'
     
-# master data
+# transactional data
 class ProductOrder(Base):
     __tablename__ = 'product_orders'
 
@@ -424,7 +424,9 @@ class ProductOrder(Base):
         return f'<Metadata {self.id} - {self.order_id}, {self.product_id})>'
     
 
-# master data, this table contains data from sample-superstore.xsl
+# this table contains data from sample-superstore.xsl orders sheet
+# this table is used to ETL data into different tables
+# technically, it's not a part of the project database
 class SupserstoreOrder(Base):
     __tablename__ = 'superstore_orders'
 
@@ -451,7 +453,7 @@ class SupserstoreOrder(Base):
     quantity: Mapped[int] = mapped_column(INTEGER(unsigned=True))
     profit: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, 
                                         comment='product discount in order, such as "0.23"')
-
+    return_status_id: Mapped[Optional[int]]
     order_at: Mapped[Optional[datetime]]
     ship_at: Mapped[Optional[datetime]]
 

@@ -299,4 +299,27 @@ def etl_product():
         )
         session.commit()
 
-etl_product()
+# etl orders table
+def etl_orders():
+    subq = (sa.select(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.order_no,
+                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id)
+                      .group_by(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.order_no,
+                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id)
+                    .subquery()
+    )
+    stmt = sa.select(mm.Customer.id.label('customer_id'), subq.c.order_no,
+                      subq.c.order_at, subq.c.return_status_id).join_from(
+        subq, mm.Customer, subq.c.customer_no == mm.Customer.customer_no
+    )
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Order), [
+                {'order_no': order_no, 'customer_id': customer_id,
+                'status_id': 1 if status_id == 1 else 2,
+                'order_date': order_date}
+                for customer_id, order_no, order_date, status_id in session.execute(stmt)
+            ],
+        )
+        session.commit()
+    
+# etl_orders()
