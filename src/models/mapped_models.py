@@ -369,8 +369,8 @@ class Product(Base):
                                       comment='product name, such as "Computer"')
     price: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, 
                                        comment='product price, such as "1233.23"')
-    discount: Mapped[int] = mapped_column(Numeric(4, 2), nullable=False, 
-                                          comment='product discount, such as "0.23"')
+    # discount: Mapped[int] = mapped_column(Numeric(4, 2), nullable=False, 
+    #                                       comment='product discount, such as "0.23"')
     category_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('categories.id', 
                                                                            ondelete='NO ACTION', 
                                                                            onupdate='CASCADE'), 

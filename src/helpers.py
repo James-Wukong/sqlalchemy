@@ -12,3 +12,7 @@ def parse_name(fullname: str)->tuple():
         return (fullname[0], fullname[1], fullname[2])
     else:
         return (fullname[0], '', '')
+    
+def unit_price(total, quantity, discount):
+    discount = 0.99 if discount == 1 else discount
+    return round(total/(quantity*(1-discount)), 2)
