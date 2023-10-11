@@ -8,6 +8,8 @@ This database is required to have a metadata table and reference table, and all 
 
 This project is mainly used to learn python and sqlalchemy orm to process data between pandas and mysql.
 
+This is my first project written with python from scratch, involving sqlalchemy. On top of that, time is also quite limited for me, so the code and structure of project still need be improved.
+
 ## sqlalchemy documentation
 
 [sqlalchemy documentation official 2.0](https://docs.sqlalchemy.org/en/20/index.html), which is pretty well documented. However, because the sqlalchemy team has put so much into this project, and it takes time to learn these things.
