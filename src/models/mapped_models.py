@@ -25,13 +25,22 @@ class Base(DeclarativeBase):
 class Metadata(Base):
     __tablename__ = 'metadatas'
 
-    id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    table_name: Mapped[str] = mapped_column(String(50), nullable=False, comment='table name')
-    column_name: Mapped[Optional[str]] = mapped_column(String(100), comment='column name')
-    data_type: Mapped[Optional[str]] = mapped_column(String(50), comment='data type for the column, eg: int')
-    description: Mapped[Optional[str]] = mapped_column(String(255), comment='description')
-    constraints: Mapped[Optional[str]] = mapped_column(String(255), comment='constrains, eg: foreign key, index, unique')
-    relationships: Mapped[Optional[str]] = mapped_column(String(255), comment='relationships, eg: has many... belongs to...')
+    id = mapped_column(INTEGER(unsigned=True), 
+                       primary_key=True, 
+                       autoincrement=True)
+    table_name: Mapped[str] = mapped_column(String(50), 
+                                            nullable=False, 
+                                            comment='table name')
+    column_name: Mapped[Optional[str]] = mapped_column(String(100), 
+                                                       comment='column name')
+    data_type: Mapped[Optional[str]] = mapped_column(String(50), 
+                                                     comment='data type for the column, eg: int')
+    description: Mapped[Optional[str]] = mapped_column(String(255), 
+                                                       comment='description')
+    constraints: Mapped[Optional[str]] = mapped_column(String(255), 
+                                                       comment='constrains, eg: foreign key, index, unique')
+    relationships: Mapped[Optional[str]] = mapped_column(String(255), 
+                                                         comment='relationships, eg: has many... belongs to...')
 
     created_at: Mapped[datetime] = mapped_column(insert_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(insert_default=func.now())
@@ -61,7 +70,8 @@ class Segment(Base):
     __tablename__ = 'segments'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(50), nullable=False, comment='segment name, such as "Home Office"')
+    name: Mapped[str] = mapped_column(String(50), nullable=False, 
+                                      comment='segment name, such as "Home Office"')
 
     # one segment can be assignment to multiple customers
     customers:Mapped[List['Customer']] = relationship(back_populates='segment')
@@ -74,12 +84,18 @@ class Customer(Base):
     __tablename__ = 'customers'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    customer_no: Mapped[str] = mapped_column(String(15), unique=True, comment='generated customer number, such as "ABC-SDF-121123"')
-    first_name: Mapped[str] = mapped_column(String(30), nullable=False, comment='first name')
-    mid_name: Mapped[Optional[str]] = mapped_column(String(30), comment='middle name')
-    last_name: Mapped[str] = mapped_column(String(30), nullable=False, comment='last name')
+    customer_no: Mapped[str] = mapped_column(String(15), unique=True, 
+                                             comment='generated customer number, such as "ABC-SDF-121123"')
+    first_name: Mapped[str] = mapped_column(String(30), nullable=False, 
+                                            comment='first name')
+    mid_name: Mapped[Optional[str]] = mapped_column(String(30), 
+                                                    comment='middle name')
+    last_name: Mapped[str] = mapped_column(String(30), nullable=False, 
+                                           comment='last name')
 
-    segment_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('segments.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    segment_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('segments.id', 
+                                                                          ondelete='NO ACTION', 
+                                                                          onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to segments table')
     # one customer has one segment
@@ -92,12 +108,13 @@ class Customer(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.customer_no} references to segment: {self.segment_id})>'
 
-# transaction data
+# reference data
 class OrderStatus(Base):
     __tablename__ = 'order_statuses'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(30), nullable=False, comment='order status label, such as "returned"')
+    name: Mapped[str] = mapped_column(String(30), nullable=False, 
+                                      comment='order status label, such as "returned"')
 
     # one order status label can be assigned to multiple orders
     orders:Mapped[List['Order']] = relationship(back_populates='order_status')
@@ -105,7 +122,7 @@ class OrderStatus(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.name})>'
 
-# transaction data
+# transactional data
 class Order(Base):
     __tablename__ = 'orders'
 
@@ -131,14 +148,17 @@ class Order(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.order_no}, {self.customer_id})>'
     
-# transaction data
+# transactional data
 class Shipment(Base):
     __tablename__ = 'shipments'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    ship_mode: Mapped[str] = mapped_column(String(50), nullable=False, comment='ship mode, such as ECONOMIC                                                                   ')
+    ship_mode: Mapped[str] = mapped_column(String(50), nullable=False, 
+                                           comment='ship mode, such as ECONOMIC                                                                   ')
     ship_date: Mapped[datetime] = mapped_column(insert_default=func.now())
-    order_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('orders.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    order_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('orders.id', 
+                                                                        ondelete='NO ACTION', 
+                                                                        onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to orders table')
     # one shippment info belongs to one order
@@ -153,11 +173,16 @@ class Employee(Base):
     __tablename__ = 'employees'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    first_name: Mapped[str] = mapped_column(String(30), nullable=False, comment='first name')
-    mid_name: Mapped[Optional[str]] = mapped_column(String(30), comment='middle name')
-    last_name: Mapped[str] = mapped_column(String(30), nullable=False, comment='last name')
+    first_name: Mapped[str] = mapped_column(String(30), nullable=False, 
+                                            comment='first name')
+    mid_name: Mapped[Optional[str]] = mapped_column(String(30), 
+                                                    comment='middle name')
+    last_name: Mapped[str] = mapped_column(String(30), nullable=False, 
+                                           comment='last name')
 
-    region_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('regions.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    region_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('regions.id', 
+                                                                         ondelete='NO ACTION', 
+                                                                         onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to regions table')
     # one employee has one region
@@ -171,7 +196,8 @@ class Region(Base):
     __tablename__ = 'regions'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False, comment='region name, such as "West"')
+    name: Mapped[str] = mapped_column(String(100), nullable=False, 
+                                      comment='region name, such as "West"')
 
     # one region belongs to one employee
     employee:Mapped['Employee'] = relationship(back_populates='region')
@@ -186,9 +212,12 @@ class Country(Base):
     __tablename__ = 'countries'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False, comment='country name, such as "Canada"')
-    code_2: Mapped[Optional[str]] = mapped_column(String(2), comment='country 2-alpha code, such as "CA"')
-    code_3: Mapped[Optional[str]] = mapped_column(String(3), comment='country 3-alpha code, such as "CAN"')
+    name: Mapped[str] = mapped_column(String(100), nullable=False, 
+                                      comment='country name, such as "Canada"')
+    code_2: Mapped[Optional[str]] = mapped_column(String(2), 
+                                                  comment='country 2-alpha code, such as "CA"')
+    code_3: Mapped[Optional[str]] = mapped_column(String(3), 
+                                                  comment='country 3-alpha code, such as "CAN"')
 
     # one country has many states
     states:Mapped[List['State']] = relationship(back_populates='country')
@@ -202,12 +231,17 @@ class State(Base):
     __tablename__ = 'states'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False, comment='state name, such as "Ontario"')
+    name: Mapped[str] = mapped_column(String(100), nullable=False, 
+                                      comment='state name, such as "Ontario"')
 
-    country_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('countries.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    country_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('countries.id', 
+                                                                          ondelete='NO ACTION', 
+                                                                          onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to countries table')
-    region_id: Mapped[Optional[INTEGER(unsigned=True)]] = mapped_column(ForeignKey('regions.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    region_id: Mapped[Optional[INTEGER(unsigned=True)]] = mapped_column(ForeignKey('regions.id', 
+                                                                                   ondelete='NO ACTION', 
+                                                                                   onupdate='CASCADE'), 
                                                                comment='fk: references to regions table')
     __table_args__ = (
         Index('countryid_name_idx', 'country_id', 'name', unique=True), 
@@ -227,9 +261,12 @@ class City(Base):
     __tablename__ = 'cities'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False, comment='city name, such as "Toronto"')
+    name: Mapped[str] = mapped_column(String(100), nullable=False, 
+                                      comment='city name, such as "Toronto"')
 
-    state_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('states.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    state_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('states.id', 
+                                                                        ondelete='NO ACTION', 
+                                                                        onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to states table')
     __table_args__ = (
@@ -248,10 +285,14 @@ class Address(Base):
     __tablename__ = 'addresses'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    address: Mapped[Optional[str]] = mapped_column(String(255), comment='address name, such as "52 fairglen ave"')
-    postcode: Mapped[str] = mapped_column(String(15), nullable=False, comment='post code, such as "123123"')
+    address: Mapped[Optional[str]] = mapped_column(String(255), 
+                                                   comment='address name, such as "52 fairglen ave"')
+    postcode: Mapped[str] = mapped_column(String(15), nullable=False, 
+                                          comment='post code, such as "123123"')
 
-    city_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('cities.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    city_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('cities.id', 
+                                                                       ondelete='NO ACTION', 
+                                                                       onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to cities table')
     __table_args__ = (
@@ -270,10 +311,14 @@ class AddressCustomer(Base):
     __tablename__ = 'address_customers'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    customer_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('customers.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    customer_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('customers.id', 
+                                                                           ondelete='NO ACTION', 
+                                                                           onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to customers table')
-    address_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('addresses.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    address_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('addresses.id', 
+                                                                          ondelete='NO ACTION', 
+                                                                          onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to addresses table')
     __table_args__ = (
@@ -293,15 +338,20 @@ class Category(Base):
     __tablename__ = 'categories'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False, comment='category name, such as "Fruit"')
+    name: Mapped[str] = mapped_column(String(100), 
+                                      nullable=False, 
+                                      comment='category name, such as "Fruit"')
 
-    parent_id: Mapped[Optional[INTEGER(unsigned=True)]] = mapped_column(ForeignKey('categories.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    parent_id: Mapped[Optional[INTEGER(unsigned=True)]] = mapped_column(ForeignKey('categories.id', 
+                                                                                   ondelete='NO ACTION', 
+                                                                                   onupdate='CASCADE'), 
                                                                comment='fk: self-references to categories table')
 
     # one sub-category belongs to one category
     parent:Mapped[Optional['Category']] = relationship(back_populates='children')
     # one category has many sub-category
-    children:Mapped[Optional[List['Category']]] = relationship(back_populates='parent', remote_side='Category.id')
+    children:Mapped[Optional[List['Category']]] = relationship(back_populates='parent', 
+                                                               remote_side='Category.id')
     # category can be assignment to many products
     products:Mapped[List['Product']] = relationship(back_populates='category')
 
@@ -313,11 +363,17 @@ class Product(Base):
     __tablename__ = 'products'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    product_no: Mapped[str] = mapped_column(String(15), unique=True, comment='generated product number, such as "ABC-SDF-121123"')
-    name: Mapped[str] = mapped_column(String(255), nullable=False, comment='product name, such as "Computer"')
-    price: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, comment='product price, such as "1233.23"')
-    discount: Mapped[int] = mapped_column(Numeric(4, 2), nullable=False, comment='product discount, such as "0.23"')
-    category_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('categories.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    product_no: Mapped[str] = mapped_column(String(15), unique=True, 
+                                            comment='generated product number, such as "ABC-SDF-121123"')
+    name: Mapped[str] = mapped_column(String(255), nullable=False, 
+                                      comment='product name, such as "Computer"')
+    price: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, 
+                                       comment='product price, such as "1233.23"')
+    # discount: Mapped[int] = mapped_column(Numeric(4, 2), nullable=False, 
+    #                                       comment='product discount, such as "0.23"')
+    category_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('categories.id', 
+                                                                           ondelete='NO ACTION', 
+                                                                           onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to categories table')
     
@@ -331,19 +387,27 @@ class Product(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.name}, {self.category_id})>'
     
-# master data
+# transactional data
 class ProductOrder(Base):
     __tablename__ = 'product_orders'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
     quantity: Mapped[int] = mapped_column(INTEGER(unsigned=True))
-    order_price: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, comment='product price in order, such as "1233.23"')
-    order_discount: Mapped[int] = mapped_column(Numeric(4, 2), nullable=False, comment='product discount in order, such as "0.23"')
+    order_price: Mapped[int] = mapped_column(Numeric(12, 2), 
+                                             nullable=False, 
+                                             comment='product price in order, such as "1233.23"')
+    order_discount: Mapped[int] = mapped_column(Numeric(4, 2), 
+                                                nullable=False, 
+                                                comment='product discount in order, such as "0.23"')
 
-    product_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('products.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    product_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('products.id', 
+                                                                          ondelete='NO ACTION', 
+                                                                          onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to products table')
-    order_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('orders.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+    order_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('orders.id', 
+                                                                        ondelete='NO ACTION', 
+                                                                        onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to orders table')
     
@@ -360,14 +424,18 @@ class ProductOrder(Base):
         return f'<Metadata {self.id} - {self.order_id}, {self.product_id})>'
     
 
-# master data
+# this table contains data from sample-superstore.xsl orders sheet
+# this table is used to ETL data into different tables
+# technically, it's not a part of the project database
 class SupserstoreOrder(Base):
     __tablename__ = 'superstore_orders'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
     row_id: Mapped[int] = mapped_column(INTEGER(unsigned=True))
-    product_no: Mapped[str] = mapped_column(String(15), nullable=False, comment='generated product number, such as "ABC-SDF-121123"')
-    order_no: Mapped[str] = mapped_column(String(50), nullable=False, comment='generated order number, such as "ABC-SDF-121123"')
+    product_no: Mapped[str] = mapped_column(String(15), nullable=False, 
+                                            comment='generated product number, such as "ABC-SDF-121123"')
+    order_no: Mapped[str] = mapped_column(String(50), nullable=False, 
+                                          comment='generated order number, such as "ABC-SDF-121123"')
     ship_mode: Mapped[Optional[str]] = mapped_column(String(255))
     customer_no: Mapped[Optional[str]] = mapped_column(String(255))
     customer_name: Mapped[Optional[str]] = mapped_column(String(255))
@@ -383,8 +451,9 @@ class SupserstoreOrder(Base):
     sales: Mapped[Optional[int]] = mapped_column(Numeric(12, 2))
     discount: Mapped[Optional[int]] = mapped_column(Numeric(4, 2))
     quantity: Mapped[int] = mapped_column(INTEGER(unsigned=True))
-    profit: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, comment='product discount in order, such as "0.23"')
-
+    profit: Mapped[int] = mapped_column(Numeric(12, 2), nullable=False, 
+                                        comment='product discount in order, such as "0.23"')
+    return_status_id: Mapped[Optional[int]]
     order_at: Mapped[Optional[datetime]]
     ship_at: Mapped[Optional[datetime]]
 

@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from src.constants import ROOT_DIR
 from src.database import engine as db_engine
 from src.models import mapped_models as mm
-from src.helpers import parse_name
+from src.helpers import parse_name, unit_price
 
 data_file = os.path.join(ROOT_DIR, 'data', 'Sample - Superstore.xls')
 engine = db_engine.sql_engine()
@@ -85,12 +85,13 @@ def etl_people():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Region), [
-                {'id': id, 'name': region} for id, region in zip(df_people['id'].tolist(), df_people['Region'].tolist())
+                {'id': id, 'name': region}
+                    for id, region in zip(df_people['id'].tolist(), df_people['Region'].tolist())
             ]
         )
         session.execute(
             sa.insert(mm.Employee), [
-                {'first_name': name.split()[1], 'last_name': name.split()[0], 'region_id': id} \
+                {'first_name': name.split()[1], 'last_name': name.split()[0], 'region_id': id}
                     for id, name in zip(df_people['id'].tolist(), df_people['Regional Manager'].tolist())
             ]
         )
@@ -113,7 +114,7 @@ def etl_state():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.State), [
-                {'name': state, 'country_id': country_id, 'region_id': region_id} \
+                {'name': state, 'country_id': country_id, 'region_id': region_id}
                 for country_id, state, region_id in session.execute(stmt)
             ],
         )
@@ -132,7 +133,7 @@ def etl_city():
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.City), [
-                {'name': city, 'state_id': state_id} \
+                {'name': city, 'state_id': state_id}
                 for state_id, city in session.execute(stmt)
             ],
         )
@@ -140,21 +141,28 @@ def etl_city():
 
 # ETL address data to addresses table
 def etl_address():
-    subq_state = (sa.select(mm.SupserstoreOrder.state, mm.SupserstoreOrder.city, mm.SupserstoreOrder.post_code)
-        .group_by(mm.SupserstoreOrder.state, mm.SupserstoreOrder.city, mm.SupserstoreOrder.post_code)
+    subq_state = (sa.select(mm.SupserstoreOrder.state, 
+                            mm.SupserstoreOrder.city, 
+                            mm.SupserstoreOrder.post_code)
+        .group_by(mm.SupserstoreOrder.state, 
+                  mm.SupserstoreOrder.city, 
+                  mm.SupserstoreOrder.post_code)
         .subquery()
     )
-    subq_city = (sa.select(mm.State.id.label('state_id'), subq_state.c.post_code, subq_state.c.city).join_from(
+    subq_city = (sa.select(mm.State.id.label('state_id'), 
+                           subq_state.c.post_code, 
+                           subq_state.c.city).join_from(
         subq_state, mm.State, mm.State.name == subq_state.c.state
     ).subquery())
     stmt = sa.select(mm.City.id.label('city_id'), subq_city.c.post_code).join_from(
-        subq_city, mm.City, sa.and_(mm.City.name == subq_city.c.city, mm.City.state_id == subq_city.c.state_id)
+        subq_city, mm.City, sa.and_(mm.City.name == subq_city.c.city, 
+                                    mm.City.state_id == subq_city.c.state_id)
     )
     
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Address), [
-                {'postcode': post_code, 'city_id': city_id} \
+                {'postcode': post_code, 'city_id': city_id}
                 for city_id, post_code in session.execute(stmt)
             ],
         )
@@ -179,7 +187,7 @@ def etl_category():
         session.commit()
         session.execute(
             sa.insert(mm.Category), [
-                {'name': sub_cate, 'parent_id': parent_id} \
+                {'name': sub_cate, 'parent_id': parent_id}
                     for parent_id, sub_cate in session.execute(sub_cate_stmt)
             ],
         )
@@ -211,21 +219,27 @@ def etl_segment():
 
 # etl customers into customers table
 def etl_customer():
-    subq = (sa.select(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.customer_name, mm.SupserstoreOrder.segment)
-        .group_by(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.customer_name, mm.SupserstoreOrder.segment)
+    subq = (sa.select(mm.SupserstoreOrder.customer_no, 
+                      mm.SupserstoreOrder.customer_name, 
+                      mm.SupserstoreOrder.segment)
+        .group_by(mm.SupserstoreOrder.customer_no, 
+                  mm.SupserstoreOrder.customer_name, 
+                  mm.SupserstoreOrder.segment)
         .subquery()
     )
-    stmt = sa.select(mm.Segment.id.label('segment_id'), subq.c.customer_no, subq.c.customer_name).join_from(
+    stmt = sa.select(mm.Segment.id.label('segment_id'), 
+                     subq.c.customer_no, 
+                     subq.c.customer_name).join_from(
         subq, mm.Segment, mm.Segment.name == subq.c.segment
     )
     # print(stmt)
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Customer), [
-                {'customer_no': customer_no, 'segment_id': segment_id, \
-                'first_name': parse_name(customer_name)[0], \
-                'mid_name': parse_name(customer_name)[1], \
-                'last_name': parse_name(customer_name)[2]} \
+                {'customer_no': customer_no, 'segment_id': segment_id,
+                'first_name': parse_name(customer_name)[0],
+                'mid_name': parse_name(customer_name)[1],
+                'last_name': parse_name(customer_name)[2]}
                 for segment_id, customer_no, customer_name in session.execute(stmt)
             ],
         )
@@ -234,15 +248,128 @@ def etl_customer():
 # etl customer address table
 def etl_address_customer():
     with Session(bind=engine) as session:
-        q = (session.query(sa.distinct(mm.SupserstoreOrder.customer_no), mm.Customer.id, mm.Address.id)
+        q = (session.query(sa.distinct(mm.SupserstoreOrder.customer_no), 
+                           mm.Customer.id, mm.Address.id)
                 .join(mm.Customer, mm.SupserstoreOrder.customer_no == mm.Customer.customer_no)
                 .join(mm.Address, mm.SupserstoreOrder.post_code == mm.Address.postcode)
                 .all())
+        
         session.execute(
             sa.insert(mm.AddressCustomer), [
-                {'customer_id': customer_id, 'address_id': address_id} \
+                {'customer_id': customer_id, 'address_id': address_id}
                     for _, customer_id, address_id in q
             ]
         )
         session.commit()
         
+# etl products table
+def etl_product():
+    subq_id = (sa.select(sa.func.min(mm.SupserstoreOrder.id).label('min_id'))
+        .group_by(mm.SupserstoreOrder.product_no, mm.SupserstoreOrder.product_name)
+        # .subquery()
+    )
+    subq_products = (sa.select(mm.SupserstoreOrder.product_no, 
+                               mm.SupserstoreOrder.product_name, 
+                               mm.SupserstoreOrder.sub_cate, 
+                               mm.SupserstoreOrder.sales,
+                               mm.SupserstoreOrder.quantity,
+                               mm.SupserstoreOrder.discount)
+                    .where(mm.SupserstoreOrder.id.in_(subq_id))
+                    .subquery()
+    )
+    stmt = sa.select(mm.Category.id.label('category_id'), 
+                     subq_products.c.product_no, 
+                     subq_products.c.product_name, 
+                     subq_products.c.sales, 
+                     subq_products.c.quantity, 
+                     subq_products.c.discount).join_from(
+        subq_products, mm.Category, mm.Category.name == subq_products.c.sub_cate
+    )
+    # print(stmt)
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Product), [
+                {'product_no': product_no,
+                 'category_id': category_id,
+                'name': product_name,
+                'price': unit_price(sales, quantity, discount)}
+                for category_id, product_no, product_name, sales, quantity, discount
+                    in session.execute(stmt)
+            ],
+        )
+        session.commit()
+
+# etl orders table
+def etl_orders():
+    subq = (sa.select(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.order_no,
+                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id)
+                      .group_by(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.order_no,
+                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id)
+                    .subquery()
+    )
+    stmt = sa.select(mm.Customer.id.label('customer_id'), subq.c.order_no,
+                      subq.c.order_at, subq.c.return_status_id).join_from(
+        subq, mm.Customer, subq.c.customer_no == mm.Customer.customer_no
+    )
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Order), [
+                {'order_no': order_no, 'customer_id': customer_id,
+                'status_id': 1 if status_id == 1 else 2,
+                'order_date': order_date}
+                for customer_id, order_no, order_date, status_id in session.execute(stmt)
+            ],
+        )
+        session.commit()
+
+# ETL product_order table  
+def etl_product_order():
+    subq = (sa.select(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.product_no,
+                      sa.func.sum(mm.SupserstoreOrder.sales).label('sum_sales'),
+                      sa.func.sum(mm.SupserstoreOrder.quantity).label('sum_quantity'))
+                    .group_by(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.product_no)
+                    .subquery()
+    )
+    stmt = sa.select(subq.c.sum_sales, subq.c.sum_quantity, 
+                     mm.Product.price, mm.Product.id.label('product_id'), 
+                     mm.Order.id.label('order_id')).join(
+        mm.Product, mm.Product.product_no == subq.c.product_no
+    ).join(
+        mm.Order, mm.Order.order_no == subq.c.order_no
+    )
+    # print(stmt)
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.ProductOrder),[
+                {'quantity': sum_quantity, 'order_price': price,
+                 'order_discount': round(1-sum_sales/(sum_quantity*price), 2), 
+                 'order_id': order_id,
+                 'product_id': product_id}
+                for sum_sales, sum_quantity, price, product_id, order_id
+                    in session.execute(stmt)
+            ]
+
+        )
+        session.commit()
+
+# etl shipment data
+def etl_shipment():
+    subq = (sa.select(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.ship_mode,
+                      mm.SupserstoreOrder.ship_at)
+                    .subquery()
+    )
+    stmt = sa.select(subq.c.ship_mode, subq.c.ship_at, mm.Order.id.label('order_id')).join_from(
+        subq, mm.Order, subq.c.order_no == mm.Order.order_no
+    )
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Shipment), [
+                {'order_id':order_id,
+                 'ship_mode': ship_mode,
+                 'ship_date': ship_at}
+                for ship_mode, ship_at, order_id in session.execute(stmt)
+            ]
+        )
+        session.commit()
+
+etl_shipment()
