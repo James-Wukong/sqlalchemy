@@ -351,4 +351,25 @@ def etl_product_order():
 
         )
         session.commit()
-etl_product_order()
+
+# etl shipment data
+def etl_shipment():
+    subq = (sa.select(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.ship_mode,
+                      mm.SupserstoreOrder.ship_at)
+                    .subquery()
+    )
+    stmt = sa.select(subq.c.ship_mode, subq.c.ship_at, mm.Order.id.label('order_id')).join_from(
+        subq, mm.Order, subq.c.order_no == mm.Order.order_no
+    )
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.Shipment), [
+                {'order_id':order_id,
+                 'ship_mode': ship_mode,
+                 'ship_date': ship_at}
+                for ship_mode, ship_at, order_id in session.execute(stmt)
+            ]
+        )
+        session.commit()
+
+etl_shipment()
