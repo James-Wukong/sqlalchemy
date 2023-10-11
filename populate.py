@@ -321,5 +321,34 @@ def etl_orders():
             ],
         )
         session.commit()
-    
-# etl_orders()
+
+# ETL product_order table  
+def etl_product_order():
+    subq = (sa.select(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.product_no,
+                      sa.func.sum(mm.SupserstoreOrder.sales).label('sum_sales'),
+                      sa.func.sum(mm.SupserstoreOrder.quantity).label('sum_quantity'))
+                    .group_by(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.product_no)
+                    .subquery()
+    )
+    stmt = sa.select(subq.c.sum_sales, subq.c.sum_quantity, 
+                     mm.Product.price, mm.Product.id.label('product_id'), 
+                     mm.Order.id.label('order_id')).join(
+        mm.Product, mm.Product.product_no == subq.c.product_no
+    ).join(
+        mm.Order, mm.Order.order_no == subq.c.order_no
+    )
+    # print(stmt)
+    with Session(bind=engine) as session:
+        session.execute(
+            sa.insert(mm.ProductOrder),[
+                {'quantity': sum_quantity, 'order_price': price,
+                 'order_discount': round(1-sum_sales/(sum_quantity*price), 2), 
+                 'order_id': order_id,
+                 'product_id': product_id}
+                for sum_sales, sum_quantity, price, product_id, order_id
+                    in session.execute(stmt)
+            ]
+
+        )
+        session.commit()
+etl_product_order()

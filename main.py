@@ -41,4 +41,5 @@ if __name__ == '__main__':
     # etl.etl_customer()
     # etl.etl_address_customer()
     # etl.etl_product()
-    # pass
+    # etl.etl_orders()
+    # etl.etl_product_order()
