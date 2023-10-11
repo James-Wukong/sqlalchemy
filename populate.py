@@ -371,5 +371,3 @@ def etl_shipment():
             ]
         )
         session.commit()
-
-etl_shipment()
