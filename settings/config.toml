@@ -8,4 +8,4 @@ host = "localhost"
 user = "root"
 password = "root"
 port = 3306
-db_name = "GBC_test"
+db_name = "GBC_superstore"
