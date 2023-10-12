@@ -57,12 +57,34 @@ class ExecutiveReport(Base):
     __tablename__ = 'executive_reports'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
+    region: Mapped[str] = mapped_column(String(100), nullable=True, 
+                                      comment='region name, such as "Ontario"')
+    state: Mapped[str] = mapped_column(String(100), nullable=True, 
+                                      comment='state name, such as "Ontario"')
+    city: Mapped[str] = mapped_column(String(100), nullable=True, 
+                                      comment='city name, such as "Ontario"')
+    product_name: Mapped[str] = mapped_column(String(255), nullable=True, 
+                                      comment='city name, such as "Ontario"')
+    total_sales: Mapped[int] = mapped_column(Numeric(12, 2), nullable=True, 
+                                        comment='product discount in order, such as "0.23"')
+    unit_sold: Mapped[Optional[int]] 
+    avg_sales: Mapped[int] = mapped_column(Numeric(12, 2), nullable=True, 
+                                        comment='product discount in order, such as "0.23"')
+    profit: Mapped[int] = mapped_column(Numeric(12, 2), nullable=True, 
+                                        comment='product discount in order, such as "0.23"')
+    
 
 # reporting data
 class OperationalReport(Base):
     __tablename__ = 'operational_reports'
 
     id = mapped_column(INTEGER(unsigned=True), primary_key=True, autoincrement=True)
+    state: Mapped[str] = mapped_column(String(100), nullable=True, 
+                                      comment='state name, such as "Ontario"')
+    total_profit: Mapped[int] = mapped_column(Numeric(12, 2), nullable=True, 
+                                        comment='product discount in order, such as "0.23"')
+    total_sales: Mapped[int] = mapped_column(Numeric(12, 2), nullable=True, 
+                                        comment='product discount in order, such as "0.23"')
 
 
 # reference data
@@ -399,6 +421,9 @@ class ProductOrder(Base):
     order_discount: Mapped[int] = mapped_column(Numeric(4, 2), 
                                                 nullable=False, 
                                                 comment='product discount in order, such as "0.23"')
+    order_profit: Mapped[int] = mapped_column(Numeric(12, 2),
+                                                nullable=False, 
+                                                comment='product profit in order, such as "0.23"')
 
     product_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('products.id', 
                                                                           ondelete='NO ACTION', 
