@@ -326,13 +326,15 @@ def etl_orders():
 def etl_product_order():
     subq = (sa.select(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.product_no,
                       sa.func.sum(mm.SupserstoreOrder.sales).label('sum_sales'),
-                      sa.func.sum(mm.SupserstoreOrder.quantity).label('sum_quantity'))
+                      sa.func.sum(mm.SupserstoreOrder.quantity).label('sum_quantity'),
+                      sa.func.sum(mm.SupserstoreOrder.profit).label('sum_profit')
+                      )
                     .group_by(mm.SupserstoreOrder.order_no, mm.SupserstoreOrder.product_no)
                     .subquery()
     )
     stmt = sa.select(subq.c.sum_sales, subq.c.sum_quantity, 
                      mm.Product.price, mm.Product.id.label('product_id'), 
-                     mm.Order.id.label('order_id')).join(
+                     mm.Order.id.label('order_id'), subq.c.sum_profit).join(
         mm.Product, mm.Product.product_no == subq.c.product_no
     ).join(
         mm.Order, mm.Order.order_no == subq.c.order_no
@@ -343,9 +345,10 @@ def etl_product_order():
             sa.insert(mm.ProductOrder),[
                 {'quantity': sum_quantity, 'order_price': price,
                  'order_discount': round(1-sum_sales/(sum_quantity*price), 2), 
+                 'order_profit': sum_profit,
                  'order_id': order_id,
                  'product_id': product_id}
-                for sum_sales, sum_quantity, price, product_id, order_id
+                for sum_sales, sum_quantity, price, product_id, order_id, sum_profit
                     in session.execute(stmt)
             ]
 
