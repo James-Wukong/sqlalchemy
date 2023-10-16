@@ -326,7 +326,7 @@ def etl_orders():
         session.execute(
             sa.insert(mm.Order), [
                 {'order_no': order_no, 'customer_id': customer_id,
-                'status_id': 1 if status_id == 1 else 2,
+                'status_id': 2 if status_id == 1 else 1,
                 'order_date': order_date,
                 'address_id': address_id}
                 for customer_id, order_no, order_date, status_id, address_id in session.execute(stmt)
