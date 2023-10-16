@@ -87,7 +87,7 @@ class OperationalReport(Base):
                                         comment='product discount in order, such as "0.23"')
 
 
-# reference data
+# master data
 class Segment(Base):
     __tablename__ = 'segments'
 
@@ -130,7 +130,7 @@ class Customer(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.customer_no} references to segment: {self.segment_id})>'
 
-# reference data
+# master data
 class OrderStatus(Base):
     __tablename__ = 'order_statuses'
 
@@ -158,6 +158,9 @@ class Order(Base):
     status_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('order_statuses.id', ondelete='NO ACTION', onupdate='CASCADE'), 
                                                                nullable=False, 
                                                                comment='fk: references to order_statuses table')
+    address_id: Mapped[INTEGER(unsigned=True)] = mapped_column(ForeignKey('addresses.id', ondelete='NO ACTION', onupdate='CASCADE'), 
+                                                               nullable=False, 
+                                                               comment='fk: references to addresses table')
     # one order belongs to one customer
     customer:Mapped['Customer'] = relationship(back_populates='orders')
     # one order has one order status label
@@ -166,6 +169,8 @@ class Order(Base):
     shipment:Mapped['Shipment'] = relationship(back_populates='order')
     # one order has many product orders
     product_orders:Mapped[List['ProductOrder']] = relationship(back_populates='order')
+    # one order has many address
+    address:Mapped['Address'] = relationship(back_populates='orders')
 
     def __repr__(self):
         return f'<Metadata {self.id} - {self.order_no}, {self.customer_id})>'
@@ -324,6 +329,8 @@ class Address(Base):
     city:Mapped['City'] = relationship(back_populates='addresses')
     # one address has many customer addresses
     address_customers:Mapped[List['AddressCustomer']] = relationship(back_populates='address')
+    # one address has many orders
+    orders:Mapped[List['Order']] = relationship(back_populates='address')
 
     def __repr__(self):
         return f'<Metadata {self.id} - {self.post_code})>'
@@ -355,7 +362,7 @@ class AddressCustomer(Base):
     def __repr__(self):
         return f'<Metadata {self.id} - {self.customer_id})>'
     
-# reference data
+# master data
 class Category(Base):
     __tablename__ = 'categories'
 

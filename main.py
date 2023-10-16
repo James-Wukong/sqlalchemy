@@ -11,9 +11,6 @@ def create_model_tables():
     Base.metadata.create_all(bind=engine)
 
 
-with Session(bind=engine) as session:
-    pass
-
 if __name__ == '__main__':
     # these exections need be carried out in sequence
     # first of all, create tables from models

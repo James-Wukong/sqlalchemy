@@ -302,22 +302,34 @@ def etl_product():
 # etl orders table
 def etl_orders():
     subq = (sa.select(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.order_no,
-                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id)
+                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id,
+                      mm.SupserstoreOrder.state, mm.SupserstoreOrder.city, 
+                      mm.SupserstoreOrder.post_code)
                       .group_by(mm.SupserstoreOrder.customer_no, mm.SupserstoreOrder.order_no,
-                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id)
+                      mm.SupserstoreOrder.order_at, mm.SupserstoreOrder.return_status_id,
+                      mm.SupserstoreOrder.state, mm.SupserstoreOrder.city, 
+                      mm.SupserstoreOrder.post_code)
                     .subquery()
     )
     stmt = sa.select(mm.Customer.id.label('customer_id'), subq.c.order_no,
-                      subq.c.order_at, subq.c.return_status_id).join_from(
+                      subq.c.order_at, subq.c.return_status_id, 
+                    #   mm.State.id.label('state_id'), mm.City.id.label('city_id'), 
+                      mm.Address.id.label('address_id')).join_from(
         subq, mm.Customer, subq.c.customer_no == mm.Customer.customer_no
-    )
+    ).join(mm.State, 
+           sa.and_(mm.State.name == subq.c.state)
+    ).join(mm.City, 
+           sa.and_(mm.City.name == subq.c.city, mm.City.state_id == mm.State.id)
+    ).join(mm.Address, 
+            sa.and_(mm.Address.postcode == subq.c.post_code, mm.Address.city_id == mm.City.id))
     with Session(bind=engine) as session:
         session.execute(
             sa.insert(mm.Order), [
                 {'order_no': order_no, 'customer_id': customer_id,
                 'status_id': 1 if status_id == 1 else 2,
-                'order_date': order_date}
-                for customer_id, order_no, order_date, status_id in session.execute(stmt)
+                'order_date': order_date,
+                'address_id': address_id}
+                for customer_id, order_no, order_date, status_id, address_id in session.execute(stmt)
             ],
         )
         session.commit()
