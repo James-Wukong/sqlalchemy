@@ -1,6 +1,6 @@
 ## Project brief description
 
-This is a lab exercise from data management (Daniel Vitaver: daniel.vitaver-bronstein@georgebrown.ca) subject. Given three data spreadsheets, which is located in data/Sample-Superstore.xsl, and required to analyze it, consequently create a normalized database tables for it.
+This is a lab exercise from data management ([Daniel Vitaver](daniel.vitaver-bronstein@georgebrown.ca)) subject. Given three data spreadsheets, which is located in data/Sample-Superstore.xsl, and required to analyze it, consequently create a normalized database tables for it.
 
 This database is required to have a metadata table and reference table, and all entities to generate an executive report and an operational report to assumed audience. In this case, we are reporting operational report to Operations Team, Regional Managers, Customer Service Team, and executive report to Executives, Strategic Planners, Marketing Team with different intentions.
 
