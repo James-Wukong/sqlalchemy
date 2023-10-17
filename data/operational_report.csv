@@ -1,231 +1,78 @@
-Period,Region,State,City,Category,Total Orders,Total Returns,Total Sales,Total Profits,Total COGS
-2021-01,Central,Illinois,Aurora,Furniture,1,0,69.3750,-47.18,116.5550
-2021-01,Central,Illinois,Aurora,Office Supplies,3,0,309.6000,96.56,213.0400
-2021-01,Central,Illinois,Aurora,Technology,1,0,2003.1680,250.40,1752.7680
-2021-01,Central,Illinois,Chicago,Office Supplies,4,0,46.6400,-10.64,57.2800
-2021-01,Central,Indiana,Richmond,Furniture,1,0,18.9600,8.53,10.4300
-2021-01,Central,Indiana,Richmond,Office Supplies,4,0,100.0200,28.43,71.5900
-2021-01,Central,Indiana,Richmond,Technology,3,0,239.7200,74.22,165.5000
-2021-01,Central,Iowa,Des Moines,Furniture,1,0,34.5800,14.52,20.0600
-2021-01,Central,Iowa,Des Moines,Office Supplies,4,0,98.6400,39.67,58.9700
-2021-01,Central,Iowa,Des Moines,Technology,1,0,207.0000,51.75,155.2500
-2021-01,Central,Iowa,Marion,Furniture,1,0,14.9100,4.62,10.2900
-2021-01,Central,Iowa,Marion,Office Supplies,3,0,121.2900,55.25,66.0400
-2021-01,Central,Kansas,Wichita,Office Supplies,1,0,279.9000,137.15,142.7500
-2021-01,Central,Michigan,Detroit,Furniture,1,0,210.9800,21.10,189.8800
-2021-01,Central,Michigan,Detroit,Technology,1,0,3059.9820,680.00,2379.9820
-2021-01,Central,Michigan,Jackson,Furniture,1,0,302.6700,72.64,230.0300
-2021-01,Central,Michigan,Jackson,Office Supplies,4,0,5603.9500,2578.58,3025.3700
-2021-01,Central,Michigan,Jackson,Technology,3,0,1135.9130,313.18,822.7330
-2021-01,Central,Missouri,Springfield,Furniture,1,0,212.9400,53.24,159.7000
-2021-01,Central,Missouri,Springfield,Office Supplies,3,0,4406.3900,153.41,4252.9800
-2021-01,Central,Texas,Austin,Office Supplies,2,0,37.0600,-59.08,96.1400
-2021-01,Central,Texas,Austin,Technology,2,0,110.5760,27.70,82.8760
-2021-01,Central,Texas,Dallas,Office Supplies,1,0,760.9800,-1141.47,1902.4500
-2021-01,Central,Texas,El Paso,Furniture,1,0,913.4300,-169.64,1083.0700
-2021-01,Central,Texas,El Paso,Office Supplies,3,0,409.3200,18.30,391.0200
-2021-01,Central,Texas,Houston,Office Supplies,1,0,18.1600,1.82,16.3400
-2021-01,Central,Texas,Huntsville,Furniture,2,0,452.1640,-214.02,666.1840
-2021-01,Central,Texas,Huntsville,Office Supplies,5,0,502.7660,-176.94,679.7060
-2021-01,Central,Texas,Keller,Office Supplies,1,0,6.0000,2.10,3.9000
-2021-01,Central,Wisconsin,Franklin,Office Supplies,1,0,3.6000,1.73,1.8700
-2021-01,East,Connecticut,Waterbury,Office Supplies,1,0,3.5200,1.02,2.5000
-2021-01,East,District of Columbia,Washington,Furniture,1,0,37.6800,15.83,21.8500
-2021-01,East,District of Columbia,Washington,Office Supplies,1,0,40.0800,19.24,20.8400
-2021-01,East,Massachusetts,Quincy,Office Supplies,1,0,12.7000,5.84,6.8600
-2021-01,East,New York,New York City,Furniture,1,0,207.8460,2.31,205.5360
-2021-01,East,New York,New York City,Office Supplies,1,0,5.2200,2.40,2.8200
-2021-01,East,New York,New York City,Technology,2,0,587.8500,193.33,394.5200
-2021-01,East,Ohio,Kent,Office Supplies,1,0,14.0160,1.75,12.2660
-2021-01,East,Ohio,Kent,Technology,2,0,179.9580,-36.00,215.9580
-2021-01,East,Ohio,Lorain,Furniture,1,0,48.8960,8.56,40.3360
-2021-01,East,Pennsylvania,Philadelphia,Furniture,2,0,919.2390,-56.99,976.2290
-2021-01,East,Pennsylvania,Philadelphia,Office Supplies,5,0,2259.4900,95.34,2164.1500
-2021-01,East,Pennsylvania,Philadelphia,Technology,1,0,429.6000,-93.08,522.6800
-2021-01,East,Vermont,Burlington,Office Supplies,4,0,637.1800,196.31,440.8700
-2021-01,South,Alabama,Hoover,Office Supplies,2,0,22.6300,7.62,15.0100
-2021-01,South,Alabama,Tuscaloosa,Office Supplies,1,0,33.7400,15.52,18.2200
-2021-01,South,Florida,Miami,Furniture,1,0,419.1360,-68.11,487.2460
-2021-01,South,Florida,Ormond Beach,Office Supplies,1,0,2.8080,-1.97,4.7780
-2021-01,South,Georgia,Columbus,Furniture,1,0,62.7200,24.46,38.2600
-2021-01,South,Georgia,Columbus,Technology,1,0,2939.9300,764.38,2175.5500
-2021-01,South,Georgia,Smyrna,Office Supplies,1,0,5.6700,0.11,5.5600
-2021-01,South,North Carolina,Charlotte,Office Supplies,2,0,383.9920,1.84,382.1520
-2021-01,South,North Carolina,Jacksonville,Office Supplies,3,0,66.2580,-26.35,92.6080
-2021-01,South,North Carolina,Jacksonville,Technology,2,0,703.6200,-27.14,730.7600
-2021-01,South,Tennessee,Johnson City,Office Supplies,4,4,63.1020,12.93,50.1720
-2021-01,South,Tennessee,Johnson City,Technology,1,1,111.9840,7.00,104.9840
-2021-01,West,Arizona,Tucson,Office Supplies,1,0,4.9380,-3.62,8.5580
-2021-01,West,Arizona,Tucson,Technology,1,0,95.9840,12.00,83.9840
-2021-01,West,California,Costa Mesa,Furniture,1,1,37.7400,12.83,24.9100
-2021-01,West,California,Costa Mesa,Technology,1,1,239.9700,26.40,213.5700
-2021-01,West,California,Long Beach,Office Supplies,4,0,332.8000,80.69,252.1100
-2021-01,West,California,Los Angeles,Furniture,3,0,902.0220,192.37,709.6520
-2021-01,West,California,Los Angeles,Office Supplies,2,0,176.3000,75.92,100.3800
-2021-01,West,California,Los Angeles,Technology,2,0,177.3660,15.86,161.5060
-2021-01,West,California,Rancho Cucamonga,Office Supplies,1,0,38.8800,18.66,20.2200
-2021-01,West,California,San Francisco,Furniture,1,1,120.7840,-13.59,134.3740
-2021-01,West,California,San Francisco,Office Supplies,11,2,2364.5980,763.52,1601.0780
-2021-01,West,California,San Francisco,Technology,1,0,359.9760,130.49,229.4860
-2021-01,West,California,San Jose,Office Supplies,2,0,302.6440,96.67,205.9740
-2021-01,West,California,San Jose,Technology,1,0,110.3520,8.28,102.0720
-2021-01,West,Colorado,Aurora,Office Supplies,1,0,168.6240,14.75,153.8740
-2021-01,West,Colorado,Aurora,Technology,1,0,169.0640,-14.79,183.8540
-2021-01,West,Montana,Great Falls,Office Supplies,3,0,1189.4300,75.57,1113.8600
-2021-01,West,Montana,Great Falls,Technology,1,0,2999.9500,1379.98,1619.9700
-2021-01,West,Washington,Seattle,Furniture,2,0,977.9600,99.07,878.8900
-2021-01,West,Washington,Seattle,Office Supplies,7,0,441.3720,81.79,359.5820
-2021-01,West,Washington,Seattle,Technology,3,0,871.0900,155.51,715.5800
-2021-02,Central,Illinois,Chicago,Furniture,2,0,503.1600,-295.42,798.5800
-2021-02,Central,Illinois,Chicago,Office Supplies,4,0,491.9560,169.33,322.6260
-2021-02,Central,Illinois,Chicago,Technology,1,0,124.7920,10.92,113.8720
-2021-02,Central,Illinois,Decatur,Furniture,2,0,608.2492,-12.23,620.4792
-2021-02,Central,Illinois,Decatur,Office Supplies,3,0,96.7520,1.52,95.2320
-2021-02,Central,Minnesota,Minneapolis,Office Supplies,1,0,90.6400,38.98,51.6600
-2021-02,Central,Oklahoma,Muskogee,Office Supplies,2,0,19.6700,5.31,14.3600
-2021-02,Central,Texas,Carrollton,Technology,1,0,47.9040,-2.99,50.8940
-2021-02,Central,Texas,Houston,Furniture,2,0,93.0504,-19.72,112.7704
-2021-02,Central,Texas,Houston,Office Supplies,3,0,441.2160,-396.94,838.1560
-2021-02,Central,Texas,Houston,Technology,2,0,566.3200,-71.67,637.9900
-2021-02,Central,Texas,Waco,Office Supplies,2,0,251.1040,-426.28,677.3840
-2021-02,East,Connecticut,Fairfield,Office Supplies,1,0,579.5100,81.13,498.3800
-2021-02,East,Connecticut,Fairfield,Technology,1,0,14.9900,7.35,7.6400
-2021-02,East,Connecticut,Middletown,Office Supplies,2,0,17.6200,8.22,9.4000
-2021-02,East,Maryland,Baltimore,Office Supplies,2,0,35.7300,9.29,26.4400
-2021-02,East,Maryland,Clinton,Office Supplies,1,0,23.1200,11.33,11.7900
-2021-02,East,New Jersey,Perth Amboy,Office Supplies,2,0,178.2100,45.71,132.5000
-2021-02,East,New York,New York City,Furniture,1,0,240.7840,30.10,210.6840
-2021-02,East,New York,New York City,Office Supplies,4,0,122.8200,52.55,70.2700
-2021-02,East,New York,New York City,Technology,1,0,227.4600,65.96,161.5000
-2021-02,East,New York,Rochester,Office Supplies,1,0,32.6700,8.49,24.1800
-2021-02,East,Ohio,Cincinnati,Office Supplies,2,0,290.7970,31.51,259.2870
-2021-02,East,Ohio,Columbus,Furniture,1,0,147.5680,-3.69,151.2580
-2021-02,East,Ohio,Columbus,Office Supplies,2,0,99.7600,36.33,63.4300
-2021-02,East,Ohio,Columbus,Technology,1,0,59.9700,-11.99,71.9600
-2021-02,East,Ohio,Troy,Furniture,3,3,1385.5440,-110.95,1496.4940
-2021-02,East,Ohio,Troy,Office Supplies,1,1,5.7150,-4.76,10.4750
-2021-02,East,Ohio,Troy,Technology,1,1,57.5940,-11.52,69.1140
-2021-02,East,Pennsylvania,Philadelphia,Office Supplies,2,0,128.8760,34.92,93.9560
-2021-02,East,Pennsylvania,Philadelphia,Technology,1,0,1319.8000,214.47,1105.3300
-2021-02,South,Florida,Pembroke Pines,Office Supplies,2,0,119.1780,37.76,81.4180
-2021-02,South,Georgia,Roswell,Office Supplies,1,0,1245.8600,361.30,884.5600
-2021-02,South,Louisiana,Lafayette,Technology,1,0,29.1600,8.46,20.7000
-2021-02,South,North Carolina,Greenville,Furniture,2,0,428.7040,-16.34,445.0440
-2021-02,South,Virginia,Arlington,Furniture,1,0,359.9700,79.19,280.7800
-2021-02,West,Arizona,Gilbert,Furniture,2,0,455.6140,-169.40,625.0140
-2021-02,West,Arizona,Gilbert,Office Supplies,2,0,61.8080,-2.54,64.3480
-2021-02,West,Arizona,Gilbert,Technology,2,0,365.5680,29.82,335.7480
-2021-02,West,California,Costa Mesa,Furniture,1,1,91.9600,15.63,76.3300
-2021-02,West,California,Costa Mesa,Office Supplies,1,1,29.6000,13.32,16.2800
-2021-02,West,California,Costa Mesa,Technology,1,1,258.5760,19.39,239.1860
-2021-02,West,California,Laguna Niguel,Furniture,1,0,203.9830,16.80,187.1830
-2021-02,West,California,Los Angeles,Furniture,4,1,1044.2540,137.16,907.0940
-2021-02,West,California,Los Angeles,Office Supplies,9,3,929.8672,241.35,688.5172
-2021-02,West,California,Los Angeles,Technology,3,1,1167.0420,124.32,1042.7220
-2021-02,West,California,San Diego,Furniture,2,0,232.8100,19.97,212.8400
-2021-02,West,California,San Diego,Office Supplies,1,0,30.9600,10.06,20.9000
-2021-02,West,California,San Diego,Technology,2,0,455.9520,57.90,398.0520
-2021-02,West,California,San Francisco,Office Supplies,2,0,51.2360,21.18,30.0560
-2021-02,West,California,Santa Barbara,Office Supplies,1,0,356.7900,99.90,256.8900
-2021-02,West,California,Torrance,Office Supplies,1,0,1640.7000,459.40,1181.3000
-2021-02,West,California,Torrance,Technology,1,0,371.2000,41.76,329.4400
-2021-02,West,Colorado,Louisville,Office Supplies,1,0,9.4320,3.07,6.3620
-2021-02,West,Washington,Seattle,Furniture,2,1,1070.6660,129.86,940.8060
-2021-02,West,Washington,Seattle,Office Supplies,3,0,26.2500,2.35,23.9000
-2021-02,West,Washington,Seattle,Technology,3,1,960.6960,376.94,583.7560
-2021-03,Central,Illinois,Aurora,Technology,1,0,7.9920,2.60,5.3920
-2021-03,Central,Illinois,Chicago,Furniture,1,0,89.7680,-2.56,92.3280
-2021-03,Central,Illinois,Chicago,Office Supplies,4,0,78.2360,-13.21,91.4460
-2021-03,Central,Illinois,Chicago,Technology,4,0,1253.9460,342.65,911.2960
-2021-03,Central,Indiana,Columbus,Furniture,1,1,2.9100,1.37,1.5400
-2021-03,Central,Indiana,Lafayette,Office Supplies,3,0,364.5800,157.14,207.4400
-2021-03,Central,Michigan,Dearborn,Furniture,1,0,60.8400,23.12,37.7200
-2021-03,Central,Michigan,Dearborn Heights,Furniture,1,0,180.9800,47.05,133.9300
-2021-03,Central,Michigan,Dearborn Heights,Technology,1,0,99.9800,42.99,56.9900
-2021-03,Central,Michigan,Detroit,Office Supplies,1,0,895.9200,421.08,474.8400
-2021-03,Central,Minnesota,Rochester,Office Supplies,4,0,375.7100,131.89,243.8200
-2021-03,Central,Oklahoma,Oklahoma City,Office Supplies,1,0,325.8600,149.90,175.9600
-2021-03,Central,Oklahoma,Tulsa,Furniture,1,0,1805.8800,523.71,1282.1700
-2021-03,Central,Texas,Amarillo,Furniture,1,0,205.3328,-36.24,241.5728
-2021-03,Central,Texas,Arlington,Office Supplies,1,0,33.6200,-90.77,124.3900
-2021-03,Central,Texas,Beaumont,Office Supplies,1,0,12.7680,0.96,11.8080
-2021-03,Central,Texas,Dallas,Furniture,1,0,933.4080,-173.35,1106.7580
-2021-03,Central,Texas,Dallas,Office Supplies,7,0,145.1740,3.34,141.8340
-2021-03,Central,Texas,Houston,Furniture,4,0,1938.6360,-182.70,2121.3360
-2021-03,Central,Texas,Houston,Office Supplies,10,2,649.2960,-63.93,713.2260
-2021-03,Central,Texas,Houston,Technology,4,0,3121.4560,625.83,2495.6260
-2021-03,Central,Texas,Huntsville,Office Supplies,1,0,143.7280,-32.34,176.0680
-2021-03,Central,Texas,San Antonio,Technology,1,0,470.3760,47.04,423.3360
-2021-03,Central,Texas,Tyler,Furniture,1,0,82.5240,-41.26,123.7840
-2021-03,Central,Texas,Tyler,Office Supplies,2,0,185.6760,-327.63,513.3060
-2021-03,Central,Texas,Tyler,Technology,1,0,27.8160,4.52,23.2960
-2021-03,Central,Texas,Waco,Office Supplies,1,0,0.5560,-0.95,1.5060
-2021-03,Central,Wisconsin,Milwaukee,Furniture,3,0,1986.5200,482.59,1503.9300
-2021-03,Central,Wisconsin,Milwaukee,Office Supplies,1,0,25.0600,11.78,13.2800
-2021-03,East,Connecticut,Fairfield,Office Supplies,3,0,523.1600,148.86,374.3000
-2021-03,East,Connecticut,Middletown,Office Supplies,1,0,61.9600,27.88,34.0800
-2021-03,East,Connecticut,Middletown,Technology,1,0,238.0000,38.08,199.9200
-2021-03,East,Delaware,Newark,Furniture,1,0,441.9600,101.65,340.3100
-2021-03,East,Delaware,Newark,Office Supplies,3,0,185.5200,76.06,109.4600
-2021-03,East,Maryland,Clinton,Technology,1,0,49.0800,4.91,44.1700
-2021-03,East,Maryland,Columbia,Office Supplies,1,0,174.3000,81.92,92.3800
-2021-03,East,Massachusetts,Cambridge,Furniture,1,0,26.7200,11.76,14.9600
-2021-03,East,Massachusetts,Cambridge,Technology,1,0,63.8800,24.91,38.9700
-2021-03,East,Massachusetts,Lowell,Technology,1,0,69.9300,32.17,37.7600
-2021-03,East,New Jersey,Lakewood,Office Supplies,1,0,8.9400,2.41,6.5300
-2021-03,East,New York,New York City,Furniture,5,1,838.9280,58.31,780.6180
-2021-03,East,New York,New York City,Office Supplies,16,1,1148.7000,351.20,797.5000
-2021-03,East,New York,New York City,Technology,9,0,1926.7400,517.81,1408.9300
-2021-03,East,Ohio,Columbus,Furniture,1,0,51.2640,7.69,43.5740
-2021-03,East,Ohio,Columbus,Office Supplies,2,0,59.4260,-0.07,59.4960
-2021-03,East,Ohio,Columbus,Technology,2,0,204.3600,36.60,167.7600
-2021-03,East,Ohio,Cuyahoga Falls,Office Supplies,1,0,18.5280,-12.35,30.8780
-2021-03,East,Ohio,Lakewood,Technology,1,0,445.4400,-81.66,527.1000
-2021-03,East,Pennsylvania,Chester,Furniture,2,0,50.5760,12.02,38.5560
-2021-03,East,Pennsylvania,Chester,Office Supplies,1,0,5.2480,0.59,4.6580
-2021-03,East,Pennsylvania,Chester,Technology,1,0,35.9100,-8.38,44.2900
-2021-03,East,Pennsylvania,Lancaster,Office Supplies,1,0,5.7150,-4.76,10.4750
-2021-03,East,Pennsylvania,Philadelphia,Furniture,2,0,169.7720,-44.93,214.7020
-2021-03,East,Pennsylvania,Philadelphia,Office Supplies,2,0,55.5740,-5.36,60.9340
-2021-03,East,Pennsylvania,Philadelphia,Technology,2,0,830.8320,-192.07,1022.9020
-2021-03,East,Pennsylvania,Reading,Office Supplies,1,0,8.8560,2.88,5.9760
-2021-03,South,Arkansas,Rogers,Office Supplies,1,0,40.4100,18.59,21.8200
-2021-03,South,Florida,Jacksonville,Office Supplies,1,0,68.7420,-48.12,116.8620
-2021-03,South,Florida,Pompano Beach,Office Supplies,1,0,64.3840,8.05,56.3340
-2021-03,South,Georgia,Atlanta,Office Supplies,2,0,98.6500,48.05,50.6000
-2021-03,South,Georgia,Atlanta,Technology,1,0,2999.9500,1439.98,1559.9700
-2021-03,South,Georgia,Columbus,Office Supplies,3,0,728.3000,195.11,533.1900
-2021-03,South,Kentucky,Henderson,Furniture,1,0,61.0000,25.62,35.3800
-2021-03,South,Kentucky,Henderson,Technology,1,0,671.9300,188.14,483.7900
-2021-03,South,Kentucky,Murray,Office Supplies,1,0,72.8000,19.66,53.1400
-2021-03,South,Mississippi,Southaven,Office Supplies,3,0,538.4820,210.79,327.6920
-2021-03,South,Mississippi,Southaven,Technology,1,0,299.9700,125.99,173.9800
-2021-03,South,North Carolina,Raleigh,Office Supplies,2,0,61.8760,-6.38,68.2560
-2021-03,South,Tennessee,Knoxville,Office Supplies,1,0,4.6080,1.67,2.9380
-2021-03,South,Virginia,Richmond,Furniture,1,0,292.1000,58.42,233.6800
-2021-03,South,Virginia,Richmond,Office Supplies,4,0,376.6000,30.78,345.8200
-2021-03,South,Virginia,Richmond,Technology,1,0,206.1000,55.65,150.4500
-2021-03,South,Virginia,Virginia Beach,Office Supplies,1,0,3.7600,1.32,2.4400
-2021-03,South,Virginia,Virginia Beach,Technology,1,0,53.2500,20.77,32.4800
-2021-03,West,California,Anaheim,Office Supplies,2,0,174.5600,65.07,109.4900
-2021-03,West,California,Fairfield,Furniture,2,2,48.0400,16.96,31.0800
-2021-03,West,California,Fairfield,Office Supplies,4,4,855.2000,36.75,818.4500
-2021-03,West,California,Fairfield,Technology,1,1,532.7200,53.27,479.4500
-2021-03,West,California,Fresno,Furniture,2,0,728.0900,21.39,706.7000
-2021-03,West,California,Fresno,Office Supplies,8,0,588.7360,207.65,381.0860
-2021-03,West,California,Fresno,Technology,2,0,691.1520,75.84,615.3120
-2021-03,West,California,Lakewood,Furniture,1,0,94.2000,39.56,54.6400
-2021-03,West,California,Lancaster,Office Supplies,1,0,17.4560,5.89,11.5660
-2021-03,West,California,Los Angeles,Furniture,2,2,570.0240,-32.03,602.0540
-2021-03,West,California,Los Angeles,Office Supplies,17,4,1990.5720,591.87,1398.7020
-2021-03,West,California,Los Angeles,Technology,5,1,2370.9320,586.85,1784.0820
-2021-03,West,California,Manteca,Office Supplies,1,0,314.5500,150.98,163.5700
-2021-03,West,California,San Francisco,Furniture,1,0,211.8400,76.26,135.5800
-2021-03,West,California,San Francisco,Office Supplies,7,0,667.8500,193.15,474.7000
-2021-03,West,California,San Francisco,Technology,6,0,1475.3280,79.91,1395.4180
-2021-03,West,Colorado,Denver,Office Supplies,1,0,1332.4960,-299.81,1632.3060
-2021-03,West,New Mexico,Albuquerque,Office Supplies,3,0,424.4000,185.55,238.8500
-2021-03,West,New Mexico,Albuquerque,Technology,2,0,355.6860,137.39,218.2960
-2021-03,West,Washington,Seattle,Furniture,1,0,22.1400,6.42,15.7200
-2021-03,West,Washington,Seattle,Office Supplies,11,2,632.3160,82.79,549.5260
-2021-03,West,Washington,Seattle,Technology,3,2,14925.8660,6833.30,8092.5660
+Period,Region,State,City,Category,Total Orders,Total Returns,Total Sales,Sales KPI,Total Profits,Total COGS
+2021-01,Central,Illinois,Aurora,Furniture,1,0,69.38,69.38,-47.18,116.56
+2021-01,Central,Illinois,Aurora,Office Supplies,3,0,309.60,103.20,96.56,213.04
+2021-01,Central,Illinois,Aurora,Technology,1,0,2003.17,2003.17,250.40,1752.77
+2021-01,Central,Illinois,Chicago,Office Supplies,4,0,46.64,11.66,-10.64,57.28
+2021-01,Central,Indiana,Richmond,Furniture,1,0,18.96,18.96,8.53,10.43
+2021-01,Central,Indiana,Richmond,Office Supplies,4,0,100.02,25.01,28.43,71.59
+2021-01,Central,Indiana,Richmond,Technology,3,0,239.72,79.91,74.22,165.50
+2021-01,Central,Iowa,Des Moines,Furniture,1,0,34.58,34.58,14.52,20.06
+2021-01,Central,Iowa,Des Moines,Office Supplies,4,0,98.64,24.66,39.67,58.97
+2021-01,Central,Iowa,Des Moines,Technology,1,0,207.00,207.00,51.75,155.25
+2021-01,Central,Iowa,Marion,Furniture,1,0,14.91,14.91,4.62,10.29
+2021-01,Central,Iowa,Marion,Office Supplies,3,0,121.29,40.43,55.25,66.04
+2021-01,Central,Kansas,Wichita,Office Supplies,1,0,279.90,279.90,137.15,142.75
+2021-01,Central,Michigan,Detroit,Furniture,1,0,210.98,210.98,21.10,189.88
+2021-01,Central,Michigan,Detroit,Technology,1,0,3059.98,3059.98,680.00,2379.98
+2021-01,Central,Michigan,Jackson,Furniture,1,0,302.67,302.67,72.64,230.03
+2021-01,Central,Michigan,Jackson,Office Supplies,4,0,5603.95,1400.99,2578.58,3025.37
+2021-01,Central,Michigan,Jackson,Technology,3,0,1135.91,378.64,313.18,822.73
+2021-01,Central,Missouri,Springfield,Furniture,1,0,212.94,212.94,53.24,159.70
+2021-01,Central,Missouri,Springfield,Office Supplies,3,0,4406.39,1468.80,153.41,4252.98
+2021-01,Central,Texas,Austin,Office Supplies,2,0,37.06,18.53,-59.08,96.14
+2021-01,Central,Texas,Austin,Technology,2,0,110.58,55.29,27.70,82.88
+2021-01,Central,Texas,Dallas,Office Supplies,1,0,760.98,760.98,-1141.47,1902.45
+2021-01,Central,Texas,El Paso,Furniture,1,0,913.43,913.43,-169.64,1083.07
+2021-01,Central,Texas,El Paso,Office Supplies,3,0,409.32,136.44,18.30,391.02
+2021-01,Central,Texas,Houston,Office Supplies,1,0,18.16,18.16,1.82,16.34
+2021-01,Central,Texas,Huntsville,Furniture,2,0,452.16,226.08,-214.02,666.18
+2021-01,Central,Texas,Huntsville,Office Supplies,5,0,502.77,100.55,-176.94,679.71
+2021-01,Central,Texas,Keller,Office Supplies,1,0,6.00,6.00,2.10,3.90
+2021-01,Central,Wisconsin,Franklin,Office Supplies,1,0,3.60,3.60,1.73,1.87
+2021-01,East,Connecticut,Waterbury,Office Supplies,1,0,3.52,3.52,1.02,2.50
+2021-01,East,District of Columbia,Washington,Furniture,1,0,37.68,37.68,15.83,21.85
+2021-01,East,District of Columbia,Washington,Office Supplies,1,0,40.08,40.08,19.24,20.84
+2021-01,East,Massachusetts,Quincy,Office Supplies,1,0,12.70,12.70,5.84,6.86
+2021-01,East,New York,New York City,Furniture,1,0,207.85,207.85,2.31,205.54
+2021-01,East,New York,New York City,Office Supplies,1,0,5.22,5.22,2.40,2.82
+2021-01,East,New York,New York City,Technology,2,0,587.85,293.93,193.33,394.52
+2021-01,East,Ohio,Kent,Office Supplies,1,0,14.02,14.02,1.75,12.27
+2021-01,East,Ohio,Kent,Technology,2,0,179.96,89.98,-36.00,215.96
+2021-01,East,Ohio,Lorain,Furniture,1,0,48.90,48.90,8.56,40.34
+2021-01,East,Pennsylvania,Philadelphia,Furniture,2,0,919.24,459.62,-56.99,976.23
+2021-01,East,Pennsylvania,Philadelphia,Office Supplies,5,0,2259.49,451.90,95.34,2164.15
+2021-01,East,Pennsylvania,Philadelphia,Technology,1,0,429.60,429.60,-93.08,522.68
+2021-01,East,Vermont,Burlington,Office Supplies,4,0,637.18,159.30,196.31,440.87
+2021-01,South,Alabama,Hoover,Office Supplies,2,0,22.63,11.32,7.62,15.01
+2021-01,South,Alabama,Tuscaloosa,Office Supplies,1,0,33.74,33.74,15.52,18.22
+2021-01,South,Florida,Miami,Furniture,1,0,419.14,419.14,-68.11,487.25
+2021-01,South,Florida,Ormond Beach,Office Supplies,1,0,2.81,2.81,-1.97,4.78
+2021-01,South,Georgia,Columbus,Furniture,1,0,62.72,62.72,24.46,38.26
+2021-01,South,Georgia,Columbus,Technology,1,0,2939.93,2939.93,764.38,2175.55
+2021-01,South,Georgia,Smyrna,Office Supplies,1,0,5.67,5.67,0.11,5.56
+2021-01,South,North Carolina,Charlotte,Office Supplies,2,0,383.99,192.00,1.84,382.15
+2021-01,South,North Carolina,Jacksonville,Office Supplies,3,0,66.26,22.09,-26.35,92.61
+2021-01,South,North Carolina,Jacksonville,Technology,2,0,703.62,351.81,-27.14,730.76
+2021-01,South,Tennessee,Johnson City,Office Supplies,4,4,63.10,15.78,12.93,50.17
+2021-01,South,Tennessee,Johnson City,Technology,1,1,111.98,111.98,7.00,104.98
+2021-01,West,Arizona,Tucson,Office Supplies,1,0,4.94,4.94,-3.62,8.56
+2021-01,West,Arizona,Tucson,Technology,1,0,95.98,95.98,12.00,83.98
+2021-01,West,California,Costa Mesa,Furniture,1,1,37.74,37.74,12.83,24.91
+2021-01,West,California,Costa Mesa,Technology,1,1,239.97,239.97,26.40,213.57
+2021-01,West,California,Long Beach,Office Supplies,4,0,332.80,83.20,80.69,252.11
+2021-01,West,California,Los Angeles,Furniture,3,0,902.02,300.67,192.37,709.65
+2021-01,West,California,Los Angeles,Office Supplies,2,0,176.30,88.15,75.92,100.38
+2021-01,West,California,Los Angeles,Technology,2,0,177.37,88.68,15.86,161.51
+2021-01,West,California,Rancho Cucamonga,Office Supplies,1,0,38.88,38.88,18.66,20.22
+2021-01,West,California,San Francisco,Furniture,1,1,120.78,120.78,-13.59,134.37
+2021-01,West,California,San Francisco,Office Supplies,11,2,2364.60,214.96,763.52,1601.08
+2021-01,West,California,San Francisco,Technology,1,0,359.98,359.98,130.49,229.49
+2021-01,West,California,San Jose,Office Supplies,2,0,302.64,151.32,96.67,205.97
+2021-01,West,California,San Jose,Technology,1,0,110.35,110.35,8.28,102.07
+2021-01,West,Colorado,Aurora,Office Supplies,1,0,168.62,168.62,14.75,153.87
+2021-01,West,Colorado,Aurora,Technology,1,0,169.06,169.06,-14.79,183.85
+2021-01,West,Montana,Great Falls,Office Supplies,3,0,1189.43,396.48,75.57,1113.86
+2021-01,West,Montana,Great Falls,Technology,1,0,2999.95,2999.95,1379.98,1619.97
+2021-01,West,Washington,Seattle,Furniture,2,0,977.96,488.98,99.07,878.89
+2021-01,West,Washington,Seattle,Office Supplies,7,0,441.37,63.05,81.79,359.58
+2021-01,West,Washington,Seattle,Technology,3,0,871.09,290.36,155.51,715.58

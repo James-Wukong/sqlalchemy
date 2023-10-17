@@ -35,9 +35,14 @@ class ExecutiveReport(ReportBase):
     def query_orders(self, session, start_date, end_date):
         return (session.query(sa.extract('year', mm.Order.order_date).label('year'), 
                             mm.Region.name.label('region'),
-                            sa.func.sum(mm.ProductOrder.order_price * mm.ProductOrder.quantity * (1 - mm.ProductOrder.order_discount)).label('order_sales'),
+                            sa.func.sum(mm.ProductOrder.order_price 
+                                        * mm.ProductOrder.quantity 
+                                        * (1 - mm.ProductOrder.order_discount)).label('order_sales'),
                             sa.func.sum(mm.ProductOrder.order_profit).label('order_profits'),
-                            sa.func.sum(mm.ProductOrder.order_price * mm.ProductOrder.quantity * (1 - mm.ProductOrder.order_discount) - mm.ProductOrder.order_profit).label('order_cogs'),
+                            sa.func.sum(mm.ProductOrder.order_price 
+                                        * mm.ProductOrder.quantity 
+                                        * (1 - mm.ProductOrder.order_discount) 
+                                        - mm.ProductOrder.order_profit).label('order_cogs'),
                             )
                 .select_from(mm.ProductOrder)
                 .join(mm.Order, mm.ProductOrder.order_id == mm.Order.id)
@@ -77,9 +82,18 @@ class OperationalReport(ReportBase):
                                 (mm.Order.status_id == 2, 1),
                                 else_=0
                             ) ).label('sum_returned'),
-                            sa.func.sum(mm.ProductOrder.order_price * mm.ProductOrder.quantity * (1 - mm.ProductOrder.order_discount)).label('sum_sales'),
+                            sa.func.round(sa.func.sum(mm.ProductOrder.order_price 
+                                                      * mm.ProductOrder.quantity 
+                                                      * (1 - mm.ProductOrder.order_discount)), 2).label('sum_sales'),
+                            sa.func.round(sa.func.sum(mm.ProductOrder.order_price 
+                                                      * mm.ProductOrder.quantity 
+                                                      * (1 - mm.ProductOrder.order_discount))
+                                                      /sa.func.count(mm.Order.id), 2).label('sales_kpi'),
                             sa.func.sum(mm.ProductOrder.order_profit).label('sum_profits'),
-                            sa.func.sum(mm.ProductOrder.order_price * mm.ProductOrder.quantity * (1 - mm.ProductOrder.order_discount) - mm.ProductOrder.order_profit).label('sum_cogs'),
+                            sa.func.round(sa.func.sum(mm.ProductOrder.order_price 
+                                                      * mm.ProductOrder.quantity 
+                                                      * (1 - mm.ProductOrder.order_discount) 
+                                                      - mm.ProductOrder.order_profit), 2).label('sum_cogs'),
                             )
                 .select_from(mm.ProductOrder)
                 .join(mm.Order, mm.ProductOrder.order_id == mm.Order.id)
@@ -133,9 +147,9 @@ if __name__ == '__main__':
     opr = OperationalReport(engine)
     opr_headers = ['Period', 'Region', 'State', 'City', 'Category', 
                'Total Orders', 'Total Returns', 
-               'Total Sales', 'Total Profits',
+               'Total Sales', 'Sales KPI', 'Total Profits',
                'Total COGS']
     with Session(bind=engine) as session:
-        q = opr.query_orders(session=session, start_date='2021-01-01', end_date='2021-03-31')
+        q = opr.query_orders(session=session, start_date='2021-01-01', end_date='2021-01-31')
     # generate operational report
     opr.gen_report(q, opr_headers, opr_filename)
